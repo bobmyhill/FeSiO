@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{babel}
+\usepackage[font=small,labelfont=bf,tableposition=top]{caption}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{lmodern}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[version=3]{mhchem}
+\graphicspath{{./figures/}}
+\usepackage{color,rotating}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+%\definecolor{webblue}{rgb}{0, 0, 0.0} % define colour for all links
+\definecolor{webblue}{rgb}{0, 0, 0.5} % define colour for all links
+
+% Hyper link stuff, works with modified elsart class, but not as well with unmodified one.
+\usepackage[pdfpagelabels,  %%% hyper-references for pdflatex
+plainpages=true,
+bookmarks=true,%                   %%% generate bookmarks
+bookmarksnumbered=true,%           %%% ... with numbers
+hypertexnames=true,%               %%% needed for correct links to figures
+breaklinks=true,%
+linkcolor=webblue,]{hyperref}
+\hypersetup{
+colorlinks  = true,
+linkcolor = webblue,
+urlcolor = webblue,
+citecolor = webblue,
+pdfauthor   = {Bob Myhill},
+pdfsubject = {},
+pdftitle    = {The thermodynamics of the Fe-Si-O-S system},
+pdfkeywords = {},
+}
+
+\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{doi:#1}}
+
+%opening
+\title{The thermodynamics of the Fe-Si-O-S system}
+\author{Bob Myhill, Dan Frost, Dave Rubie}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+
+\section{Motivation}
+
+\section{Modelling strategy}
+Many works have attempted to design a thermodynamically consistent model describing the chemical activities of solutes in iron (and other metal) melts. Most of these works focus on highly dilute substances, where the molar fraction of the solutes does not exceed a few percent. The first of these models is the Wagner $\varepsilon$ formalism \citep{Wagner1952}. This model assumes that $\gamma_{\textrm{solvent}} = 1$. The parameters in this formalism are the activity coefficient of the solute at infinite dilution $\gamma_i^0$ ($\partial \mathcal G^* / \partial X_i$), and interaction parameters $\varepsilon_i^j$ ($\partial^2 \mathcal G^* / \partial X_i \partial X_j$; sometimes with higher order terms) describing how this coefficient changes with small additions of other compounds. The success of this model has led to a wealth of experimental studies reporting these values for many different solutes. 
+
+Subsequent models have attempted to include a term for non-unity solvent activities. \cite{BP1990} present a quadratic formalism for the excess non-configurational Gibbs free energy, which has been applied to chemically complex liquid alloys \citep{BB1995}. Where $-0.5\, \varepsilon_{ii} = \ln \gamma_{\textrm{solvent}}$, their ``Unified Interaction Parameter Formalism'' is identical to a regular solution model between the solvent and solute. If $\varepsilon_{ii}$ is inversely proportional to temperature, $W_{\textrm{solvent}, i} = -0.5\, R\, T\,  \varepsilon_{ii}$. \cite{Ma2001} proposed a more complete formalism based on an infinite Taylor expansion, again using the values for $\gamma$ and $\varepsilon$. However, they drop higher order terms, which again leads to a non-zero excess Gibbs free energy as concentration of the solute approaches 1.
+
+In experimental petrology, it is common to work with metallic melts which are relatively concentrated in solutes. This can be either the result of analytical limitations or because the metallic melts of interest are really quite concentrated. In this case, epsilon-type models should be avoided, especially when trying to invert compositions within a fixed bulk composition. The collapse of such models can be illustrated with the case of S-rich Fe melts. The activity coefficient $\ln\gamma_S$ and first derivative $\varepsilon_{S,S}$ of S in Fe have the same sign, so that $\mu_{S,sol}$ and $\mu_{S}$ actually diverge as $X_S \rightarrow 1$. 
+
+Often, it is inappropriate to think of the metal solution as a mixture of solvent and solute. For many two component systems (Fe-S, Fe-Si, Fe-O), intermediate solid compounds (such as FeS, FeSi, and FeO) imply that the melt may also have such species. Making the assumption that the melt can be described by regular symmetric mixing between the pure solvent (A) and the liquid form of two intermediate compounds (B' and C'), the Gibbs energy of formation of the intermediate compounds and the interaction parameters describing mixing in that system can be derived from $\varepsilon_{ij}$ and $\ln \gamma_{\textrm{solvent}}$:
+
+\begin{align}
+  &\begin{aligned}
+     \mathllap{\mathcal{G}_{\textrm{excess}}} &= \left(1-\frac{X}{x}-\frac{Y}{y}\right)\frac{X}{x}W_{\textrm{AB'}} + \left(1-\frac{X}{x}-\frac{Y}{y}\right)\frac{Y}{y}W_{\textrm{AC'}} + \frac{XY}{xy}W_{\textrm{B'C'}} \\ 
+     &\qquad +  \frac{X}{x} \Delta \mathcal{G}_{\textrm{B'}}  + \frac{Y}{y} \Delta \mathcal{G}_{\textrm{C'}}
+   \end{aligned}\\
+  &\begin{aligned}
+     &= \frac{X}{x}\left(W_{\textrm{AB'}} + \Delta \mathcal{G}_{\textrm{B'}}\right) + \frac{Y}{y}\left(W_{\textrm{AC'}} + \Delta \mathcal{G}_{\textrm{C'}}\right) - \frac{X}{x}^2\, W_{\textrm{AB'}} - \frac{Y}{y}^2\, W_{\textrm{AC'}} \\
+     &\qquad +  \frac{XY}{xy} \left( W_{\textrm{B'C'}} - W_{\textrm{AB'}} - W_{\textrm{AC'}} \right)
+   \end{aligned} \\
+  W_{\textrm{AB'}} &= -\frac{x^2\,\varepsilon_{\textrm{BB}}}{2} \\
+  W_{\textrm{AC'}} &= -\frac{y^2\,\varepsilon_{\textrm{CC}}}{2} \\
+  W_{\textrm{B'C'}} &= x\,y\,\varepsilon_{\textrm{BC}} -\frac{x^2\,\varepsilon_{\textrm{BB}}}{2} -\frac{y^2\,\varepsilon_{\textrm{CC}}}{2} \\
+  \Delta \mathcal{G}_{\textrm{B'}} &= x\,(\ln \gamma^0_B + \frac{x\, \varepsilon_{\textrm{BB}}}{2} )\\
+  \Delta \mathcal{G}_{\textrm{C'}} &= y\,(\ln \gamma^0_C + \frac{y\, \varepsilon_{\textrm{CC}}}{2} )
+\end{align}
+
+\noindent This formulation is mathematically equivalent to the Unified Interaction Parameter Formalism \citep{BP1990}. In this case, however, extrapolation to high pressures can be based on the melting curves of the solvent and intermediate compound. For more complex solution models (for example, where compounds B and C exist as species in the melt in addition to B' and C'), information on the speciation in the melt is required to constrain the interaction parameters and Gibbs free energies of the individual melt species.
+
+\section{Minerals considered in this study}
+\begin{table}[h]
+\begin{tabular}{llll}
+  Mineral name        & Chemical formula & Symbol             & Space group \\
+  Ferrite (BCC-Fe; A2)    & Fe               & $\alpha$, $\delta$ & 60          \\
+  Austenite (FCC-Fe; A1)  & Fe               & $\gamma$           & 50          \\
+  W\"ustite & FeO &   &  \\
+  Hexaferrum (HCP-Fe; A3) & Fe               & $\varepsilon$      & P6$_3$/mmc  \\
+  Iron silicon (B20)  & FeSi             & $\varepsilon$      & P2$_1$3     \\
+  Iron silicon (B2)   & FeSi             &                    & Pm3m        \\
+  Hapkeite (B2)       & Fe$_2$Si         &                    & Pm3m        \\
+  Gupeiite (D0$_3$)   & Fe$_3$Si         &                    & Fm3m        \\
+  Xifengite           & Fe$_5$Si$_3$     &                    & P6$_3$/mcm   \\
+  Iron monosulfide I     &  FeS    &     &     \\
+  Iron monosulfide II     &  FeS   &     &     \\
+  Iron monosulfide III     &  FeS   &     &     \\
+  Iron monosulfide IV     & FeS    &     &     \\
+  Iron monosulfide V     &  FeS   &     &     \\
+  Iron monosulfide VI     &  FeS   &     &     \\
+  Tri-iron disulfide     &  Fe$_3$S$_2$   &     &     \\
+  Di-iron monosulfide     & Fe$_2$S    &     &     \\
+  Tri-iron monosulfide     & Fe$_3$S    &     &     \\
+\end{tabular}
+\end{table}
+
+\section{Fe allotropes}
+\subsection{bcc ($\alpha$-iron, $\delta$-iron)}
+\subsection{fcc ($\gamma$-iron)}
+At 1 bar, bcc transforms to fcc iron at ..., and then backtransforms at ...
+\subsection{hcp ($\varepsilon$-iron)}
+The hcp structure becomes stable at high pressures. Its equation of state has recently been investigated by ... 
+The transition from fcc to hcp iron provides the necessary data to fit the enthalpy and entropy of formation. The transformation was investigated \emph{in-situ} by \cite{KFMP2009}, using the volume of hcp iron as a pressure standard. Therefore, the derived standard enthalpy and entropy of the phase are directly dependent on the equation of state chosen for hcp iron.
+\subsection{Liquid}
+\subsubsection{Activity coefficients and interaction parameters}
+Data taken from \cite{steelbook}. Conversion between mass percent and mole fraction is derived in \cite{LE1966}.
+
+\begin{table}[h]
+\begin{tabular}{llllll}
+$i$                  & State & $\gamma^{\circ}_i$ & T (K) & $\Delta$G$^{\circ}i$ = $i$(1\%) & Reference  \\
+\hline
+$\frac{1}{2}$O$_2$ & l     & -        & 1873  & -117110 - 3.39 T               & \cite{SS1959} \\
+Si                 & l     & 0.0013   & 1873  & -131500 - 17.24 T              & \cite{SE1974}     
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\begin{minipage}{20cm}
+\begin{tabular}{llllllp{2.7cm}l}
+$i$, $j$, $k$ & State & $e_i$($j$, $k$) & $\varepsilon_i$($j$, $k$) & T (K) & Conc range & Temperature dependency         & Reference \\
+\hline
+O O           & l     & -0.1743                                  & -10.77 & 1873  &            & -1750/T + 0.76 (-115304/T + 50.79) {[}1823-1923{]} & \cite{SS1959} \\
+Si O          & l     & -0.119\footnote{so O Si $\sim$ -0.066} & -7.13 & 1873  & Si $<$ 3   & {[}1823-1973{]}                & \cite{SF1983} \\
+Si Si         & l     & 0.103                                  & 12.41 & 1873  & Si $<$ 3   & {[}1823-1973{]}                & \cite{SF1983} 
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\section{Fe + light elements}
+Sulfur can be incorporated to a into solid iron at high pressure \citep[Fig. 6 of ][]{MAAB2014}, but there is some argument as to the amount as a function of pressure \citep{SSWL2007, CB2007, Kamadaetal2010}. Silicon is more controversial; many experimental studies suggest that significant amounts of Si can enter the HCP phase of Fe, but thermodynamically this appears to be unreasonable; the volumes of the Fe and FeSi phases promote an increasingly large compositional region where B2 FeSi coexists with HCP iron \cite{BMS2009}. At least oxygen is simpler; very little oxygen enters the hcp iron structure.
+
+
+
+
+\section{Fe-Si compounds}
+\subsection{Si}
+\begin{table}[h]
+\begin{tabular}{llll}
+Phase ID & Structure  & P$_{300 K}$ (GPa) & $\Delta$V \\
+\hline
+I        & cd         & -               & -          \\
+II       & $\beta$-Sn & 11.7            & 21.0(1)    \\
+XI       & Imma       & 13.2(3)         & 0.2(1)     \\
+V        & sh         & 15.4            & 0.5(1)     \\
+VI       & Cmca       & $\sim$38        & 5.1        \\
+VII      & hcp        & $\sim$42        & 1.9        \\
+X        & fcc        & 79(2) / 80(3)   & 0.3(6)     \\
+liquid   & liq        & -               & -          \\
+\end{tabular}
+\end{table}
+
+
+
+\subsection{FeSi}
+There are two phases of FeSi which are of relevance to the currently project. The low pressure polymorph has the B20 structure, and is known as $\varepsilon$-FeSi. It transforms to the B2 structure at ca. 30 GPa \citep{GJ2014}. There is some controversy over the phase boundary, but we prefer the work of \cite{GJ2014} over other studies which report a higher transition pressure \citep{FCRMHDP2013} or a -55.1 MPa/K Clapeyron slope \citep{LWDACK2010}, as their experiments are reversed, and cover a wide range of temperatures from 1000 K to 2400 K. In terms of thermodynamics, the different interpretations yields differences of standard state entropy of $\sim$ 20 J/K/mol/atom, similar to the entropy of the B20 structure itself! 
+
+\subsection{Fe$_3$Si}
+
+\subsection{Fe$_2$Si} 
+\subsection{Fe-Si alloys}
+
+Fe-rich Si-bearing alloys exist in three main structures; BCC (A2-B2-DO3), FCC (A1) and HCP (A3). In addition, stoichiometric FeSi adopts the B20 structure at low pressure. 
+
+A second significant controversy arises from the preservation of Si-bearing hcp iron. One experimental study found that increasing pressure caused a dissociation of hcp with 5.1 wt\% Si into hcp and B2 at 140 GPa, 1380 K \citep{Dubetal2003}. This finding was supported by a thermodynamic study \citep{BMS2009}. However, other experimental studies suggest that increasing pressure stabilises hcp over a mixture of Si-poor hcp and Si-rich B2 \citep{LHCDS2002, LSFCKP2009, KSHSO2009, TKHO2015, FCRMHDP2013}. One argument for the difference between these results is that the extremely long experimental run time (5 hours) of \cite{Dubetal2003} caused diffusion of carbon from the diamond anvil cell into the sample, stabilising (Si-rich) B2 alloy over the Si-bearing hcp structure. This argument might be more compelling if it weren't for the reversal conducted by \cite{Dubetal2003}, that revealed the recovery of single phase hcp at 30 GPa and 1100 K from the dissociated sample after 8 hours further heating. The alternative argument is that dissociation of Si-bearing hcp iron is kinetically hindered, and that \emph{only} long run durations are capable of revealing the equilibrium phase relations. None of the studies employing shorter run durations bracketed the dissociation temperature by cooling, and all ambient temperature assemblages were single phase hcp prior to heating. The phase boundary for 9.9 wt \% Si reported by \cite{KSHSO2009} is several hundred degrees higher than that predicted by \cite{FCRMHDP2013}. The problem is even worse for the 15 wt \% Si sample \citep{LSFCKP2009}, which has an intermediate P-T slope between those of the 9 and 9.9 wt \% samples \citep{TKHO2015, KSHSO2009} Conversely, the results from \cite{LHCDS2002} indicate transformation at very low temperatures compared to predictions, despite the lower Si content. 
+
+The equations of state for the FCC, HCP and BCC structures help to resolve this problem. At all temperatures and pressures, BCC-structured Fe (A2) is larger than FCC and HCP, while BCC-structured FeSi (B2) is smaller than FCC and HCP. Excess volumes of mixing in this system are negligible, and so it is inevitable that as pressure increases, coexisting HCP and BCC phases will become more Si-poor and Si-rich respectively. As a result, we can rule out the various positive Clapeyron slopes of the B2-in reaction presented over the last fifteen years. More long-duration experiments similar to the study of \cite{Dubetal2003}, measuring carbon contents in the coexisting HCP and B2 phases would be extremely useful.
+
+\section{Fe-O compounds}
+W\"ustite
+
+\section{Fe-S compounds}
+\subsection{FeS}
+There are six polymorphs wih an FeS composition. 
+
+\subsection{Fe$_3$S$_2$}
+
+\subsection{Fe$_2$S}
+
+\subsection{Fe$_3$S}
+This is going to be the most important phase in terms of constraining the properties of FeS liquid 
+
+\section{Fe-C compounds}
+
+\section{Fe-H compounds}
+
+\section{Thermodynamic data on Si-O compounds}
+Silica polymorphs
+
+\section{Thermodynamic data on Fe-Si-O compounds}
+Ferrosilite, Fayalite
+
+\section{Fe-Si-O-S melts}
+
+This quaternary system probably covers the compositions of cores within the terrestrial planets, notwithstanding the possibilities of small amounts of hydrogen, carbon and magnesium in the Earth, and arguably large amounts of hydrogen in Mars. It has been argued that carbon is a major contributor to the light elements in the Earth \citep[e.g.][]{Prescheretal2015}, however, in the presence of sulfur, an iron sulfide melt is found to be in equilibrium with diamond even in carbon-poor peridotite \citep{TD2015}.
+
+Usefully, there are solvi in this quaternary, which provide constraints on the properties of the liquid solutions independent from the endmember properties. 
+\begin{itemize}
+\item The major solvi in the system are between Fe-FeO \citep{FS1997, HK2004, TOT2007}, FeS-FeSi \citep{Raghavan1988, SF2004,MK2010} and FeSi-FeO \citep{IP1973}.
+\item There is no solvus between Fe-FeSi, Fe-FeS \citep{WH1979} or FeO-FeS \citep{WH1979, Kress2000}.
+\end{itemize}
+
+\subsection{Adding C}
+Fe-C melts show no immiscibility, but FeC-FeS melts do at $<$6 GPa \citep{CWF2008,DBWW2009}.
+FeC-FeSi and FeC-FeO melts I can't find any data on...
+\clearpage
+\bibliographystyle{model2-names.bst}
+\bibliography{references} % References file
+
+
+\end{document}
