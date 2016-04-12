@@ -1,0 +1,364 @@
+\documentclass[11pt,a4paper,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{babel}
+\usepackage[font=small,labelfont=bf,tableposition=top]{caption}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{lmodern}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage[version=3]{mhchem}
+\graphicspath{{./figures/}}
+\usepackage{color,rotating}
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+%\definecolor{webblue}{rgb}{0, 0, 0.0} % define colour for all links
+\definecolor{webblue}{rgb}{0, 0, 0.5} % define colour for all links
+
+% Hyper link stuff, works with modified elsart class, but not as well with unmodified one.
+\usepackage[pdfpagelabels,  %%% hyper-references for pdflatex
+plainpages=true,
+bookmarks=true,%                   %%% generate bookmarks
+bookmarksnumbered=true,%           %%% ... with numbers
+hypertexnames=true,%               %%% needed for correct links to figures
+breaklinks=true,%
+linkcolor=webblue,]{hyperref}
+\hypersetup{
+colorlinks  = true,
+linkcolor = webblue,
+urlcolor = webblue,
+citecolor = webblue,
+pdfauthor   = {Bob Myhill},
+pdfsubject = {},
+pdftitle    = {The thermodynamics of the Fe-Si-O-S system},
+pdfkeywords = {},
+}
+
+\newcommand{\doi}[1]{\href{http://dx.doi.org/#1}{doi:#1}}
+
+%opening
+\title{Fe-Si-O model}
+\author{Bob Myhill, Dave Rubie, Dan Frost}
+
+\begin{document}
+
+\maketitle
+
+\section{Solid endmembers}
+Endmembers are constructed using the isothermal-isochoric equation of state of \cite{SLB2011}, with an additional electronic contribution to the heat capacity. The electronic contribution is linear at low temperatures, and tends to roll over at high temperature. An Einstein function is a useful approximation to the high temperature form, and so we approximate the electronic heat capacity as follows:
+
+\[
+    Cv_{el}= 
+\begin{dcases}
+    \frac{38 Cv_{el, max}}{3 T_{el}},& \text{if } T \leq 0.388247\, T_{el}\\
+    \frac{x^2 e^x}{\left(e^x - 1 \right)^2} R Cv_{el, max}     & \text{otherwise}
+\end{dcases}
+\]
+\noindent where $x = T_{el}/T $ and the characteristic electronic temperature is a function of volume:
+\begin{equation}
+  T_{el} = T_{el0} \left(\frac{V_0}{V}\right)^{1.5}
+\end{equation}
+
+Endmembers of interest are the fcc and hcp forms of Fe, B1-structured FeO and B20- and B2-structured FeSi
+
+
+\section{Liquid endmembers}
+The thermodynamics of the liquid endmembers are based on the isentropic-isochoric equation of state of \cite{AA1994}. Because of the paucity of data for FeO and FeSi liquids, the potential and electronic contributions to the equations of state are simplified. The electronic contribution is assumed to be well-approximated by the same form as chosen for the solid endmembers. The potential contribution is simplified by setting the parameters $F_i=1$ and $\lambda_i=0$.
+
+
+\section{Liquid solution model}
+A subregular solution is chosen to model the liquid properties. At 1 bar, the solvus in the Fe--FeO system is of a similar width and position to that of the Fe$_{0.5}$Si$_{0.5}$--FeO system \citep{IP1973}, and so the endmembers Fe, Fe$_{0.5}$Si$_{0.5}$ and FeO were chosen as the independent components of the solution. The configurational entropy of mixing can therefore be estimated by a two site model, each of multiplicity 0.5 ([Fe]0.5[Fe]0.5, [Fe]0.5[Si]0.5, [FeO]0.5[FeO]0.5).
+
+It is likely that excess volumes decrease with pressure, so a second order Murnaghan equation of state was used to model the decrease with pressure. Excess volumes are approximated by the expression:
+
+\begin{equation}
+  V_P^{xs} = V_0^{xs} \left(1 + \frac{K'^{xs}P}{K_0^{xs}}^{-1/K'^{xs}} \right)
+\end{equation}
+
+This expression can be integrated as a function of pressure to find the PV contribution to the excess gibbs free energy. In this study, we assume that $K'^{xs}=4$.
+
+
+\section{Oxide-silicate equilibria}
+The B1 FeO model was used as one of the endmembers of the ferropericlase solution. The MgO properties are unimportant for this model; the solution was modeled as a symmetric Margules solution with a constant interaction energy of 13 kJ/mol.
+
+For MgSiO$_3$-FeSiO$_3$ bridgmanite, the model of \cite{SLB2011} was used. The baseline Helmholtz energy of the MgSiO$_3$ and FeSiO$_3$ endmembers were \emph{reduced} by 108.19 and 105.97 kJ/mol, which are half the adjustments required to bring the Gibbs free energies of enstatite and ferrosilite (six oxygens per formula unit) at 1 bar and 300 K into agreement with standard state energies of formation \citep[as estimated by][]{HP2011}.
+
+
+Results are in quite good agreement with the results of \citep{OHMBSO2008, OHMBSO2009}.
+
+
+\section{Silicate melt equilibria}
+I've done a lot of work trying to piece together a model for MgO-FeO-SiO$_2$ melts. Dan has seen the MgO-SiO$_2$ part (we used it in the hydrous melting paper), and assuming that MgO-FeO mixing is almost ideal, all we really have to worry about is FeO-SiO$_2$ mixing and potential ternary terms. There's almost no data on the FeO-SiO$_2$ system though, and I'm concerned that any complex model won't extrapolate very well...
+
+For the time being, I'd advocate using the $K_D$ approach that you and Dan have used before. It saves making justifications for higher order equations of state, which are necessary for SiO$_2$ (5th order in de Koker and Stixrude). If you would prefer a silicate melt model too, then I'll give you what I've got, but I haven't tested it yet...
+
+
+\section{Outstanding issues (maybe not so important?)}
+\begin{itemize}
+\item FeO liquid properties are poorly constrained.
+\item The drop in sound speed for FeSi with temperature reported by \citep{WMSF2015} is a bit difficult to fit with the freedom afforded by the liquid model. It's alright, but it requires a big atomic potential contribution.
+\item Fe--FeO eutectic compositions are lower in FeO than those estimated by \cite{SHCPW2008}. However, the liquidus temperatures in the middle of the binary agree quite well.
+\item Eutectic temperatures at high pressures are lower than predicted by the coexistence of Fe and FeO reported by \cite{OTHOH2011}, as reported in \cite{Kom2014}. However, they are in remarkably good agreement with \cite{Boehler1993}.
+\end{itemize}
+
+
+\section{Data}
+\subsection{Solid endmember parameters}
+\subsubsection{HCP iron}
+\begin{lstlisting}
+{
+  "Gprime_0": NaN, 
+  "K_0": 161900000000.0, 
+  "T_el": 6000.0, 
+  "G_0": NaN, 
+  "F_0": -4165.0, 
+  "q_0": 1.0, 
+  "Kprime_0": 5.15, 
+  "T_0": 300.0, 
+  "Debye_0": 395.0, 
+  "Cv_el": 3.0, 
+  "grueneisen_0": 2.0, 
+  "V_0": 6.764e-06, 
+  "name": "HCP iron", 
+  "molar_mass": 0.055845, 
+  "equation_of_state": "slbel3", 
+  "n": 1.0, 
+  "eta_s_0": NaN, 
+  "formula": {
+    "Fe": 1.0
+  }, 
+  "P_0": 0.0
+}
+\end{lstlisting}
+
+\subsubsection{FCC iron}
+\begin{lstlisting}
+{
+  "Gprime_0": NaN, 
+  "K_0": 145000000000.0, 
+  "T_el": 9200.0, 
+  "G_0": NaN, 
+  "F_0": -2784.0, 
+  "q_0": 0.06, 
+  "Kprime_0": 5.3, 
+  "T_0": 300.0, 
+  "Debye_0": 285.0, 
+  "Cv_el": 2.7, 
+  "grueneisen_0": 1.9, 
+  "V_0": 6.97e-06, 
+  "name": "FCC iron", 
+  "molar_mass": 0.055845, 
+  "equation_of_state": "slbel3", 
+  "n": 1.0, 
+  "eta_s_0": NaN, 
+  "formula": {
+    "Fe": 1.0
+  }, 
+  "P_0": 0.0
+}
+\end{lstlisting}
+
+\subsubsection{B1 FeO}
+\begin{lstlisting}
+{
+  "Gprime_0": NaN, 
+  "K_0": 180000000000.0, 
+  "T_el": 1400.0, 
+  "G_0": NaN, 
+  "F_0": -275450.0, 
+  "q_0": 1.5, 
+  "Kprime_0": 4.93, 
+  "T_0": 300.0, 
+  "Debye_0": 460.0, 
+  "Cv_el": 0.98, 
+  "grueneisen_0": 1.4, 
+  "V_0": 1.2239e-05, 
+  "name": "B1 FeO", 
+  "molar_mass": 0.0718444, 
+  "equation_of_state": "slbel3", 
+  "n": 2.0, 
+  "eta_s_0": NaN, 
+  "formula": {
+    "Fe": 1.0, 
+    "O": 1.0
+  }, 
+  "P_0": 0.0
+}
+\end{lstlisting}
+
+\subsubsection{B20 FeSi}
+\begin{lstlisting}
+{
+  "Cv_el": 2.7, 
+  "grueneisen_0": 2.5, 
+  "V_0": 1.35874562855625e-05, 
+  "name": "B20 FeSi", 
+  "K_0": 202000000000.0, 
+  "molar_mass": 0.08393049999999999, 
+  "q_0": 0.5, 
+  "T_el": 7000.0, 
+  "equation_of_state": "slbel3", 
+  "G_0": 59000000000.0, 
+  "F_0": -88733.0, 
+  "P_0": 0.0, 
+  "Kprime_0": 4.4, 
+  "eta_s_0": -0.1, 
+  "formula": {
+    "Si": 1.0, 
+    "Fe": 1.0
+  }, 
+  "T_0": 300.0, 
+  "n": 2.0, 
+  "Gprime_0": 1.4, 
+  "Debye_0": 460.0
+}
+\end{lstlisting}
+
+\subsubsection{B2 FeSi}
+\begin{lstlisting}
+{
+  "Cv_el": 2.7, 
+  "grueneisen_0": 2.5, 
+  "V_0": 1.2828e-05, 
+  "name": "B2 FeSi", 
+  "K_0": 230600000000.0, 
+  "molar_mass": 0.08393049999999999, 
+  "q_0": 0.5, 
+  "T_el": 7000.0, 
+  "equation_of_state": "slbel3", 
+  "G_0": 59000000000.0, 
+  "F_0": -71746.0, 
+  "P_0": 0.0, 
+  "Kprime_0": 4.17, 
+  "eta_s_0": -0.1, 
+  "formula": {
+    "Si": 1.0, 
+    "Fe": 1.0
+  }, 
+  "T_0": 300.0, 
+  "n": 2.0, 
+  "Gprime_0": 1.4, 
+  "Debye_0": 490.0
+}
+\end{lstlisting}
+
+
+\subsection{Liquid endmember parameters}
+\subsubsection{liquid iron}
+\begin{lstlisting}
+{
+  "Cv_el": 2.8, 
+  "S_0": 99.823, 
+  "grueneisen_0": 1.735, 
+  "E_0": 72700.0, 
+  "V_0": 7.956261575723038e-06, 
+  "name": "liquid iron", 
+  "Kprime_S": 4.661, 
+  "molar_mass": 0.055845, 
+  "T_el": 6000.0, 
+  "equation_of_state": "aamod", 
+  "n": 1.0, 
+  "xi_0": 15.785706150000001, 
+  "theta": 6000.0, 
+  "grueneisen_n": -1.87, 
+  "formula": {
+    "Fe": 1.0
+  }, 
+  "T_0": 1809.0, 
+  "Kprime_prime_S": -4.248860528714676e-11, 
+  "K_S": 109700000000.0, 
+  "P_0": 100000.0, 
+  "grueneisen_prime": -2.3278717879846e-06
+}
+\end{lstlisting}
+
+\subsubsection{liquid FeO}
+\begin{lstlisting}
+{
+  "Cv_el": 2.7, 
+  "S_0": 188.0, 
+  "grueneisen_0": 1.3, 
+  "E_0": -131792.283, 
+  "V_0": 1.4967583333333334e-05, 
+  "name": "liquid FeO", 
+  "Kprime_S": 4.9, 
+  "molar_mass": 0.0718444, 
+  "T_el": 3500.0, 
+  "equation_of_state": "aamod", 
+  "n": 2.0, 
+  "xi_0": 25.0, 
+  "theta": 3500.0, 
+  "grueneisen_n": -1.87, 
+  "formula": {
+    "Fe": 1.0, 
+    "O": 1.0
+  }, 
+  "T_0": 1650.0, 
+  "Kprime_prime_S": -5.975609756097561e-11, 
+  "K_S": 82000000000.0, 
+  "P_0": 100000.0, 
+  "grueneisen_prime": -2.3278717879846e-06
+}
+\end{lstlisting}
+
+\subsubsection{liquid Fe0.5Si0.5}
+\begin{lstlisting}
+{
+  "Cv_el": 1.35, 
+  "S_0": 91.8095, 
+  "grueneisen_0": 2.8, 
+  "E_0": 34123.5, 
+  "V_0": 8.196337890624999e-06, 
+  "name": "liquid Fe0.5Si0.5", 
+  "Kprime_S": 4.66, 
+  "molar_mass": 0.041965249999999996, 
+  "T_el": 7000.0, 
+  "equation_of_state": "aamod", 
+  "n": 1.0, 
+  "xi_0": 100.0, 
+  "theta": 150.0, 
+  "grueneisen_n": -1.87, 
+  "formula": {
+    "Si": 0.5, 
+    "Fe": 0.5
+  }, 
+  "T_0": 1683.0, 
+  "Kprime_prime_S": -3.5e-11, 
+  "K_S": 94500000000.0, 
+  "P_0": 100000.0, 
+  "grueneisen_prime": -4.6557435759692e-06
+}
+\end{lstlisting}
+
+\subsection{Solution model parameters}
+\begin{lstlisting}
+energy_interaction = [[[-40000.0, -40000.0], [83307.0, 135943.0]], [[83307.0, 135943.0]]]
+entropy_interaction = [[[0.0, 0.0], [8.978, 31.122]], [[8.978, 31.122]]]
+volume_interaction = [[[0.0, 0.0], [-1.11e-06, -5.5e-07]], [[-1.11e-06, -5.5e-07]]]
+modulus_interaction = [[[100000000000.0, 100000000000.0], [100000000000.0, 100000000000.0]], [[100000000000.0, 100000000000.0]]]
+\end{lstlisting}
+
+\clearpage
+\bibliographystyle{model2-names.bst}
+\bibliography{references} % References file
+
+
+\end{document}
